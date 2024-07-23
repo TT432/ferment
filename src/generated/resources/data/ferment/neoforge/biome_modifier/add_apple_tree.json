@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#c:is_forest",
+  "features": "ferment:apple_tree",
+  "step": "vegetal_decoration"
+}

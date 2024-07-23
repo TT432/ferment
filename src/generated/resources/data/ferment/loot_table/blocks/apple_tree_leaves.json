@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "ferment:bad_apple"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:apple",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ferment:apple_sapling",
+          "weight": 9
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ferment:blocks/apple_tree_leaves"
+}
