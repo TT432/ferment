@@ -1,0 +1,14 @@
+{
+  "type": "ferment:fermenter",
+  "base": {
+    "item": "ferment:bad_apple"
+  },
+  "input_fluid": {
+    "fluid": "minecraft:water"
+  },
+  "nutrient": {
+    "item": "minecraft:apple"
+  },
+  "output_fluid": "ferment:cider",
+  "time": 48000
+}

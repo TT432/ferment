@@ -1,0 +1,11 @@
+{
+  "block.ferment.apple_sapling": "苹果树苗",
+  "block.ferment.apple_tree_leaves": "苹果树树叶",
+  "block.ferment.fermenter": "发酵罐",
+  "ferment.main": "发酵",
+  "item.ferment.bad_apple": "烂苹果",
+  "item.ferment.bottle.fluid.ferment.cider": "苹果酒瓶",
+  "item.ferment.bottle.fluid.ferment.slat_water": "盐水瓶",
+  "item.ferment.bottle.fluid.minecraft.empty": "空瓶",
+  "item.ferment.salt": "盐"
+}

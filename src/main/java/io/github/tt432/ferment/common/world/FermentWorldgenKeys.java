@@ -1,4 +1,4 @@
-package io.github.tt432.ferment.world;
+package io.github.tt432.ferment.common.world;
 
 import io.github.tt432.ferment.Ferment;
 import lombok.AccessLevel;

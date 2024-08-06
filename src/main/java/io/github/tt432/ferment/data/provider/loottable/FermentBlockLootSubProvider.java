@@ -1,7 +1,7 @@
 package io.github.tt432.ferment.data.provider.loottable;
 
-import io.github.tt432.ferment.block.FermentBlocks;
-import io.github.tt432.ferment.item.FermentItems;
+import io.github.tt432.ferment.common.block.FermentBlocks;
+import io.github.tt432.ferment.common.item.FermentItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
@@ -34,6 +34,7 @@ public class FermentBlockLootSubProvider extends BlockLootSubProvider {
         );
 
         dropSelf(FermentBlocks.APPLE_SAPLING.get());
+        dropSelf(FermentBlocks.FERMENTER.get());
     }
 
     @Override

@@ -1,4 +1,4 @@
-package io.github.tt432.ferment.block;
+package io.github.tt432.ferment.common.block;
 
 import io.github.tt432.ferment.Ferment;
 import lombok.AccessLevel;
@@ -6,11 +6,10 @@ import lombok.NoArgsConstructor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.block.SaplingBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -34,6 +33,17 @@ public class FermentBlocks {
                             .randomTicks()
                             .instabreak()
                             .sound(SoundType.GRASS)
+                            .pushReaction(PushReaction.DESTROY));
+
+    public static final DeferredBlock<FermenterBlock> FERMENTER =
+            BLOCKS.registerBlock("fermenter", FermenterBlock::new,
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.WOOD)
+                            .noOcclusion()
+                            .sound(SoundType.WOOD)
+                            .instrument(NoteBlockInstrument.BASS)
+                            .strength(0.6F)
+                            .ignitedByLava()
                             .pushReaction(PushReaction.DESTROY));
 
     private static BlockBehaviour.Properties leaves(SoundType pSoundType) {

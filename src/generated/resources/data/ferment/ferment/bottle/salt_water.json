@@ -1,0 +1,9 @@
+{
+  "addition": {
+    "item": "ferment:salt"
+  },
+  "bottle": {
+    "fluid": "minecraft:water"
+  },
+  "output": "ferment:slat_water"
+}

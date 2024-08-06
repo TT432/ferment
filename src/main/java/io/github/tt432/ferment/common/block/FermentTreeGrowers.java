@@ -1,6 +1,6 @@
-package io.github.tt432.ferment.block;
+package io.github.tt432.ferment.common.block;
 
-import io.github.tt432.ferment.world.FermentWorldgenKeys;
+import io.github.tt432.ferment.common.world.FermentWorldgenKeys;
 import lombok.NoArgsConstructor;
 import net.minecraft.world.level.block.grower.TreeGrower;
 

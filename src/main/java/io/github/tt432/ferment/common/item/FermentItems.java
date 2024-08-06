@@ -1,7 +1,7 @@
-package io.github.tt432.ferment.item;
+package io.github.tt432.ferment.common.item;
 
 import io.github.tt432.ferment.Ferment;
-import io.github.tt432.ferment.block.FermentBlocks;
+import io.github.tt432.ferment.common.block.FermentBlocks;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import net.minecraft.world.food.Foods;
@@ -21,4 +21,8 @@ public class FermentItems {
             Item::new, new Item.Properties().food(Foods.APPLE));
 
     public static final DeferredItem<BlockItem> APPLE_SAPLING = ITEMS.registerSimpleBlockItem(FermentBlocks.APPLE_SAPLING);
+    public static final DeferredItem<BlockItem> FERMENTER = ITEMS.registerSimpleBlockItem(FermentBlocks.FERMENTER);
+    public static final DeferredItem<Item> SALT = ITEMS.registerItem("salt", Item::new);
+    public static final DeferredItem<BottleItem> BOTTLE =
+            ITEMS.registerItem("bottle", BottleItem::new, new Item.Properties().stacksTo(1));
 }
