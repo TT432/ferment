@@ -1,27 +1,23 @@
+# 发酵
 
-Installation information
-=======
+---
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions at [github](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+_从茹毛饮血的时代开始，一群无毛的猿猴举着木棒，谨慎又好奇地打量这个世界。_
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+_它们将自己尚且无力研究的事物归类于魔法和神迹。_
 
-> **Note**: For Eclipse, use tasks in `Launch Group` instead of ones founds in `Java Application`. A preparation task must run before launching the game. NeoGradle uses launch groups to do these subsequently.
+_为什么天上挂着明亮的圆球？为什么火焰那么滚烫？以及，为什么我的食物摆了几天尝起来会那么不一样？_
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+_酒、酱汁、面包、醋......食物的变质如此神秘，或臭不可闻或美味无比。_
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+_这难道不是一种罐中的小精灵所致？或者酒神喷出他的鼻息？_
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+_很长一段时间里，发酵的艺术被附上了神秘主义的烙印。打开罐子，放入食物，再把它合上，经历让人心痒的等待。_
+
+_等你打开的时候，它又要施展什么样的魔法，把普通的食材变化成哪一种奇迹？_
+
+---
+
+## 介绍
+
+添加了发酵系统，可以制作发酵食品。
