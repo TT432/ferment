@@ -5,6 +5,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
@@ -32,6 +33,8 @@ public class BottleItem extends Item {
     }
 
     public static ItemStack bottle(Fluid fluid) {
+        if (fluid == Fluids.EMPTY) return Items.GLASS_BOTTLE.getDefaultInstance();
+        else if (fluid == Fluids.WATER) return Items.POTION.getDefaultInstance();
         var stack = BOTTLE.toStack();
         stack.set(FermentItemDataComponents.FLUID, fluid);
         return stack;

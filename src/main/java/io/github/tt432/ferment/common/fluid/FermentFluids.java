@@ -41,8 +41,8 @@ public class FermentFluids {
 
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, Ferment.MOD_ID);
 
-    public static final Supplier<Fluid> SALT_WATER = FLUIDS.register("slat_water", () -> new FluidWithType(SLAT_WATER_TYPE));
-    public static final Supplier<Fluid> CIDER = FLUIDS.register("cider", () -> new FluidWithType(CIDER_TYPE));
+    public static final DeferredHolder<Fluid, Fluid> SALT_WATER = FLUIDS.register("slat_water", () -> new FluidWithType(SLAT_WATER_TYPE));
+    public static final DeferredHolder<Fluid, Fluid> CIDER = FLUIDS.register("cider", () -> new FluidWithType(CIDER_TYPE));
 
     private static DeferredHolder<FluidType, FluidType> registerType(String id, int color) {
         return FLUID_TYPES.register(id, () -> new FluidType(FluidType.Properties.create()

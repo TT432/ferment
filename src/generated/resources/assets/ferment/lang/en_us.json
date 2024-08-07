@@ -2,10 +2,13 @@
   "block.ferment.apple_sapling": "Apple Sapling",
   "block.ferment.apple_tree_leaves": "Apple Tree Leaves",
   "block.ferment.fermenter": "Fermenter",
+  "ferment.jei.recipe.bottle": "Bottle",
   "ferment.main": "Ferment",
+  "fluid.ferment.cider": "Cider",
+  "fluid.ferment.slat_water": "Salt Water",
   "item.ferment.bad_apple": "Bad Apple",
   "item.ferment.bottle.fluid.ferment.cider": "Cider Bottle",
   "item.ferment.bottle.fluid.ferment.slat_water": "Salt Water Bottle",
-  "item.ferment.bottle.fluid.minecraft.empty": "Empty Bottle",
-  "item.ferment.salt": "Salt"
+  "item.ferment.salt": "Salt",
+  "item.minecraft.glass_bottle": "Empty Bottle"
 }

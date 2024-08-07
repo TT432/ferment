@@ -9,8 +9,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.function.Supplier;
-
 /**
  * @author TT432
  */
@@ -19,7 +17,7 @@ public class FermentRecipeTypes {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES =
             DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, Ferment.MOD_ID);
 
-    public static final Supplier<RecipeType<FermenterRecipe>> FERMENTER = register("fermenter");
+    public static final DeferredHolder<RecipeType<?>, RecipeType<FermenterRecipe>> FERMENTER = register("fermenter");
 
     private static <T extends Recipe<?>> DeferredHolder<RecipeType<?>, RecipeType<T>> register(String name) {
         return RECIPE_TYPES.register(name, () -> new RecipeType<>() {

@@ -17,6 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class FermentItemColors {
     @SubscribeEvent
+    @SuppressWarnings("removal")
     public static void onEvent(RegisterColorHandlersEvent.Item event) {
         event.register(
                 (stack, layer) -> {

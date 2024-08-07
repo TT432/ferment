@@ -6,7 +6,9 @@ import io.github.tt432.ferment.common.fluid.FermentFluids;
 import io.github.tt432.ferment.common.item.BottleItem;
 import io.github.tt432.ferment.common.item.FermentItemGroup;
 import io.github.tt432.ferment.common.item.FermentItems;
+import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
@@ -32,5 +34,14 @@ public class FermentENLanguageProvider extends LanguageProvider {
         addItemStack(() -> BottleItem.bottle(FermentFluids.CIDER), "Cider Bottle");
 
         add(FermentItemGroup.MAIN.getKey().location().toLanguageKey(), "Ferment");
+
+        addFluid(FermentFluids.SALT_WATER, "Salt Water");
+        addFluid(FermentFluids.CIDER, "Cider");
+
+        add("ferment.jei.recipe.bottle", "Bottle");
+    }
+
+    void addFluid(Holder<Fluid> holder, String value) {
+        add(holder.getKey().location().toLanguageKey("fluid"), value);
     }
 }
