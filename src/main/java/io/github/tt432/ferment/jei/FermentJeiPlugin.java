@@ -1,6 +1,5 @@
 package io.github.tt432.ferment.jei;
 
-import io.github.tt432.eyelib.util.ResourceLocations;
 import io.github.tt432.ferment.Ferment;
 import io.github.tt432.ferment.common.block.FermentBlocks;
 import io.github.tt432.ferment.common.datapack.BottleData;
@@ -48,7 +47,7 @@ import java.util.List;
 public class FermentJeiPlugin implements IModPlugin {
     @Override
     public @NotNull ResourceLocation getPluginUid() {
-        return ResourceLocations.mod("plugin");
+        return ResourceLocation.fromNamespaceAndPath(Ferment.MOD_ID,"plugin");
     }
 
     @SuppressWarnings("unchecked")
