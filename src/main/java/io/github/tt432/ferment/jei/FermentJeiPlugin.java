@@ -47,7 +47,7 @@ import java.util.List;
 public class FermentJeiPlugin implements IModPlugin {
     @Override
     public @NotNull ResourceLocation getPluginUid() {
-        return ResourceLocation.fromNamespaceAndPath(Ferment.MOD_ID,"plugin");
+        return ResourceLocation.fromNamespaceAndPath(Ferment.MOD_ID, "plugin");
     }
 
     @SuppressWarnings("unchecked")
