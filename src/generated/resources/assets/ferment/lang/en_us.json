@@ -7,8 +7,9 @@
   "fluid.ferment.cider": "Cider",
   "fluid.ferment.slat_water": "Salt Water",
   "item.ferment.bad_apple": "Bad Apple",
+  "item.ferment.bottle.fluid.ferment.ale": "Ale Bottle",
   "item.ferment.bottle.fluid.ferment.cider": "Cider Bottle",
   "item.ferment.bottle.fluid.ferment.slat_water": "Salt Water Bottle",
-  "item.ferment.salt": "Salt",
-  "item.minecraft.glass_bottle": "Empty Bottle"
+  "item.ferment.cider_lees": "Apple Pomace",
+  "item.ferment.salt": "Salt"
 }

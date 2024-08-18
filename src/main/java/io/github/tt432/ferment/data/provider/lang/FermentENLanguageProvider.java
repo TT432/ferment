@@ -9,7 +9,6 @@ import io.github.tt432.ferment.common.item.FermentItems;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
 /**
@@ -28,10 +27,11 @@ public class FermentENLanguageProvider extends LanguageProvider {
 
         addItem(FermentItems.BAD_APPLE, "Bad Apple");
         addItem(FermentItems.SALT, "Salt");
+        addItem(FermentItems.CIDER_LEES, "Apple Pomace");
 
-        addItemStack(() -> BottleItem.bottle(() -> Fluids.EMPTY), "Empty Bottle");
         addItemStack(() -> BottleItem.bottle(FermentFluids.SALT_WATER), "Salt Water Bottle");
         addItemStack(() -> BottleItem.bottle(FermentFluids.CIDER), "Cider Bottle");
+        addItemStack(() -> BottleItem.bottle(FermentFluids.ALE), "Ale Bottle");
 
         add(FermentItemGroup.MAIN.getKey().location().toLanguageKey(), "Ferment");
 

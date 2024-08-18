@@ -25,4 +25,6 @@ public class FermentItems {
     public static final DeferredItem<Item> SALT = ITEMS.registerItem("salt", Item::new);
     public static final DeferredItem<BottleItem> BOTTLE =
             ITEMS.registerItem("bottle", BottleItem::new, new Item.Properties().stacksTo(1));
+    public static final DeferredItem<Item> CIDER_LEES = ITEMS.registerItem("cider_lees", Item::new);
+    public static final DeferredItem<Item> SPENT_GRAIN = ITEMS.registerItem("spent_grain", Item::new);
 }

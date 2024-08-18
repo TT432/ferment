@@ -26,6 +26,7 @@ public class FermentItemGroup {
                         FermentItems.ITEMS.getEntries().forEach(holder -> output.accept(holder.get()));
                         output.accept(BottleItem.bottle(FermentFluids.SALT_WATER));
                         output.accept(BottleItem.bottle(FermentFluids.CIDER));
+                        output.accept(BottleItem.bottle(FermentFluids.ALE));
                     })
                     .build()
     );

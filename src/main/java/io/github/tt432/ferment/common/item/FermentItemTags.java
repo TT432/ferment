@@ -12,7 +12,7 @@ import net.minecraft.world.item.Item;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FermentItemTags {
-    // todo public static final TagKey<Item> LEAVEN = tag("leaven");
+     public static final TagKey<Item> LEES = tag("lees");
 
     private static TagKey<Item> tag(String name) {
         return TagKey.create(Registries.ITEM, ResourceLocations.of("c", name));

@@ -8,10 +8,7 @@ import io.github.tt432.ferment.common.datapack.FermentDataPacks;
 import io.github.tt432.ferment.common.fluid.FermentFluids;
 import io.github.tt432.ferment.common.item.FermentItems;
 import io.github.tt432.ferment.common.world.FermentWorldgenKeys;
-import io.github.tt432.ferment.data.provider.FermentBlockStateProvider;
-import io.github.tt432.ferment.data.provider.FermentItemModelProvider;
-import io.github.tt432.ferment.data.provider.FermentLootTableProvider;
-import io.github.tt432.ferment.data.provider.FermenterRecipeProvider;
+import io.github.tt432.ferment.data.provider.*;
 import io.github.tt432.ferment.data.provider.lang.FermentENLanguageProvider;
 import io.github.tt432.ferment.data.provider.lang.FermentZHLanguageProvider;
 import lombok.AccessLevel;
@@ -66,12 +63,12 @@ public class GatherDataHandler {
     public static void onEvent(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
-        var provider = event.getLookupProvider();
+        var lookupProvider = event.getLookupProvider();
         ExistingFileHelper helper = event.getExistingFileHelper();
 
         generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
                 output,
-                provider,
+                lookupProvider,
                 new RegistrySetBuilder()
                         .add(Registries.CONFIGURED_FEATURE, GatherDataHandler::registerConfiguredFeature)
                         .add(Registries.PLACED_FEATURE, GatherDataHandler::registerPlacedFeature)
@@ -80,8 +77,13 @@ public class GatherDataHandler {
                 Set.of(Ferment.MOD_ID)
         ));
 
-        generator.addProvider(event.includeServer(), new FermentLootTableProvider(output, provider));
-        generator.addProvider(event.includeServer(), new FermenterRecipeProvider(output, provider));
+        generator.addProvider(event.includeServer(), new FermentLootTableProvider(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new FermenterRecipeProvider(output, lookupProvider));
+        FermentBlockTagProvider blockTagProvider = new FermentBlockTagProvider(output, lookupProvider, helper);
+        generator.addProvider(event.includeServer(), blockTagProvider);
+        generator.addProvider(event.includeServer(),
+                new FermentItemTagProvider(output, lookupProvider, blockTagProvider.contentsGetter(), helper));
+
         generator.addProvider(event.includeClient(), new FermentItemModelProvider(output, helper));
         generator.addProvider(event.includeClient(), new FermentBlockStateProvider(output, helper));
         generator.addProvider(event.includeClient(), new FermentENLanguageProvider(output));

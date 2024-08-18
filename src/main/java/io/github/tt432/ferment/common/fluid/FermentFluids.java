@@ -38,11 +38,14 @@ public class FermentFluids {
 
     public static final Supplier<FluidType> SLAT_WATER_TYPE = registerType("slat_water", 0xFFC2C2C2);
     public static final Supplier<FluidType> CIDER_TYPE = registerType("cider", 0xFFc78f8f);
+    public static final Supplier<FluidType> ALE_TYPE = registerType("ale", 0xFF6f2c16);
+
 
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, Ferment.MOD_ID);
 
     public static final DeferredHolder<Fluid, Fluid> SALT_WATER = FLUIDS.register("slat_water", () -> new FluidWithType(SLAT_WATER_TYPE));
     public static final DeferredHolder<Fluid, Fluid> CIDER = FLUIDS.register("cider", () -> new FluidWithType(CIDER_TYPE));
+    public static final DeferredHolder<Fluid, Fluid> ALE = FLUIDS.register("ale", () -> new FluidWithType(ALE_TYPE));
 
     private static DeferredHolder<FluidType, FluidType> registerType(String id, int color) {
         return FLUID_TYPES.register(id, () -> new FluidType(FluidType.Properties.create()
@@ -69,6 +72,7 @@ public class FermentFluids {
                 return canFluidLog ? super.getBlockPathType(state, level, pos, mob, true) : null;
             }
 
+            @SuppressWarnings("removal")
             public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
                 consumer.accept(new IClientFluidTypeExtensions() {
                     private static final ResourceLocation UNDERWATER_LOCATION = ResourceLocation.withDefaultNamespace("textures/misc/underwater.png");

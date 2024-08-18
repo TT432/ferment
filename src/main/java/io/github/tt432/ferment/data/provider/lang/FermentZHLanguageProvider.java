@@ -9,7 +9,6 @@ import io.github.tt432.ferment.common.item.FermentItems;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
 /**
@@ -28,10 +27,11 @@ public class FermentZHLanguageProvider extends LanguageProvider {
 
         addItem(FermentItems.BAD_APPLE, "烂苹果");
         addItem(FermentItems.SALT, "盐");
+        addItem(FermentItems.CIDER_LEES, "苹果渣");
 
-        addItemStack(() -> BottleItem.bottle(Fluids.EMPTY), "空瓶");
         addItemStack(() -> BottleItem.bottle(FermentFluids.SALT_WATER), "盐水瓶");
         addItemStack(() -> BottleItem.bottle(FermentFluids.CIDER), "苹果酒瓶");
+        addItemStack(() -> BottleItem.bottle(FermentFluids.ALE), "小麦酒瓶");
 
         add(FermentItemGroup.MAIN.getKey().location().toLanguageKey(), "发酵");
 

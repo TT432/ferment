@@ -3,6 +3,7 @@ package io.github.tt432.ferment.data.provider;
 import io.github.tt432.eyelib.util.ResourceLocations;
 import io.github.tt432.ferment.Ferment;
 import io.github.tt432.ferment.common.fluid.FermentFluids;
+import io.github.tt432.ferment.common.item.FermentItemTags;
 import io.github.tt432.ferment.common.item.FermentItems;
 import io.github.tt432.ferment.common.recipe.FermenterRecipe;
 import net.minecraft.advancements.Advancement;
@@ -14,7 +15,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -38,8 +38,17 @@ public class FermenterRecipeProvider extends RecipeProvider {
                 Ingredient.of(Items.APPLE),
                 FluidIngredient.of(Fluids.WATER),
                 48000,
-                ItemStack.EMPTY,
+                FermentItems.CIDER_LEES.toStack(),
                 FermentFluids.CIDER.get()
+        ));
+
+        add(output, ResourceLocations.of(Ferment.MOD_ID, "ale"), new FermenterRecipe(
+                Ingredient.of(FermentItemTags.LEES),
+                Ingredient.of(Items.WHEAT),
+                FluidIngredient.of(Fluids.WATER),
+                48000,
+                FermentItems.SPENT_GRAIN.toStack(),
+                FermentFluids.ALE.get()
         ));
     }
 

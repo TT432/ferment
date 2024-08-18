@@ -7,8 +7,9 @@
   "fluid.ferment.cider": "苹果酒",
   "fluid.ferment.slat_water": "盐水",
   "item.ferment.bad_apple": "烂苹果",
+  "item.ferment.bottle.fluid.ferment.ale": "小麦酒瓶",
   "item.ferment.bottle.fluid.ferment.cider": "苹果酒瓶",
   "item.ferment.bottle.fluid.ferment.slat_water": "盐水瓶",
-  "item.ferment.salt": "盐",
-  "item.minecraft.glass_bottle": "空瓶"
+  "item.ferment.cider_lees": "苹果渣",
+  "item.ferment.salt": "盐"
 }

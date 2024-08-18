@@ -1,18 +1,18 @@
 {
   "type": "ferment:fermenter",
   "base": {
-    "item": "ferment:bad_apple"
+    "tag": "c:lees"
   },
   "input_fluid": {
     "fluid": "minecraft:water"
   },
   "nutrient": {
-    "item": "minecraft:apple"
+    "item": "minecraft:wheat"
   },
   "output": {
     "count": 1,
-    "id": "ferment:cider_lees"
+    "id": "ferment:spent_grain"
   },
-  "output_fluid": "ferment:cider",
+  "output_fluid": "ferment:ale",
   "time": 48000
 }
