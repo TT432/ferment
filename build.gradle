@@ -40,7 +40,7 @@ base {
 // Mojang ships Java 21 to end users starting in 1.20.5, so mods should target Java 21.
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-//minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 //minecraft.accessTransformers.entry public net.minecraft.client.Minecraft textureManager # textureManager
 
 // Default run configurations.
@@ -103,7 +103,7 @@ configurations {
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
-    implementation 'io.github.tt432:eyelib:21.0.6'
+    implementation 'io.github.tt432:eyelib:21.1.0'
 
     var jei_version = "19.7.0.84"
 
@@ -163,4 +163,27 @@ idea {
         downloadSources = true
         downloadJavadoc = true
     }
+}
+
+tasks.register("runWithRenderDoc", Exec) {
+    def javaExecTask = tasks.withType(JavaExec).named("runClient").get()
+    def javaHome = javaExecTask.javaLauncher.get().metadata.installationPath.asFile.absolutePath
+
+    commandLine = [
+            "E:\\RenderDoc\\renderdoccmd.exe",
+            "capture",
+            "--opt-hook-children",
+            "--wait-for-exit",
+            "--working-dir",
+            ".",
+            "$javaHome/bin/java.exe",
+            "-Xmx64m",
+            "-Xms64m",
+            "-Dorg.gradle.appname=gradlew",
+            "-Dorg.gradle.java.home=$javaHome",
+            "-classpath",
+            "gradle/wrapper/gradle-wrapper.jar",
+            "org.gradle.wrapper.GradleWrapperMain",
+            "runClient"
+    ]
 }

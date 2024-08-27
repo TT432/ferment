@@ -26,6 +26,8 @@ public class FermentItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         basicItem(FermentItems.BAD_APPLE.asItem());
         basicItem(FermentItems.SALT.asItem());
+        basicItem(FermentItems.CIDER_LEES.asItem());
+        basicItem(FermentItems.SPENT_GRAIN.asItem());
 
         getBuilder(FermentItems.BOTTLE.asItem().toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))

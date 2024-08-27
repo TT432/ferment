@@ -2,16 +2,20 @@ package io.github.tt432.ferment.common.block.entity;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.tt432.ferment.common.item.FermentBottles;
 import io.github.tt432.ferment.common.recipe.FermentRecipeTypes;
 import io.github.tt432.ferment.common.recipe.FermenterRecipe;
 import io.github.tt432.ferment.common.recipe.FermenterRecipeInput;
+import io.github.tt432.ferment.common.ui.Slot;
+import io.github.tt432.ferment.common.ui.SlotSet;
+import io.github.tt432.ferment.common.ui.Slots;
+import io.github.tt432.ferment.data.FermentDataAttachments;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
@@ -22,9 +26,9 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.fluids.FluidStack;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -34,11 +38,40 @@ import java.util.function.Function;
 public class FermenterBlockEntity extends BlockEntity {
     @Getter
     @Setter
-    private Data data = new Data(NonNullList.withSize(3, ItemStack.EMPTY), Fluids.EMPTY, Fluids.EMPTY, 0);
+    private Data data = new Data(
+            NonNullList.withSize(3, ItemStack.EMPTY),
+            NonNullList.withSize(2, FluidStack.EMPTY),
+            0
+    );
     private final FermenterRecipeInput input = new FermenterRecipeInput(this);
 
     private final RecipeManager.CachedCheck<FermenterRecipeInput, FermenterRecipe> check =
             RecipeManager.createCheck(FermentRecipeTypes.FERMENTER.get());
+
+    private void update() {
+        setChanged();
+        BlockState state = getBlockState();
+        level.sendBlockUpdated(getBlockPos(), state, state, Block.UPDATE_CLIENTS);
+    }
+
+    public final SlotSet slots = new SlotSet(List.of(
+            new Slot(-53, -51, 18, 18, player -> {
+                if (Slots.itemInput(player, data.inventory, 0)) update();
+            }),
+            new Slot(-53, -30, 18, 18, player -> {
+                if (Slots.itemInput(player, data.inventory, 1)) update();
+            }),
+            new Slot(33, 11, 18, 18, player -> {
+                if (Slots.itemOutput(player, data.inventory, 2)) update();
+            }),
+            new Slot(-76, -51, 20, 80, player -> {
+                if (Slots.fluidInput(player, data.fluidStacks, 0, FermentBottles.GET_BOTTLE_FLUID, FermentBottles.FILL_BOTTLE))
+                    update();
+            }),
+            new Slot(54, -51, 20, 80, player -> {
+                if (Slots.fluidOutput(player, data.fluidStacks, 1, FermentBottles.FILL_BOTTLE)) update();
+            })
+    ));
 
     @Setter
     @Getter
@@ -49,14 +82,15 @@ public class FermenterBlockEntity extends BlockEntity {
                         lst -> NonNullList.of(ItemStack.EMPTY, lst.toArray(ItemStack[]::new)),
                         Function.identity()
                 ).fieldOf("inventory").forGetter(Data::getInventory),
-                BuiltInRegistries.FLUID.byNameCodec().fieldOf("fluid").forGetter(Data::getFluid),
-                BuiltInRegistries.FLUID.byNameCodec().fieldOf("output_fluid").forGetter(Data::getOutputFluid),
+                FluidStack.OPTIONAL_CODEC.listOf().xmap(
+                        lst -> NonNullList.of(FluidStack.EMPTY, lst.toArray(FluidStack[]::new)),
+                        Function.identity()
+                ).fieldOf("fluid_stacks").forGetter(Data::getFluidStacks),
                 Codec.INT.optionalFieldOf("processing_tick", 0).forGetter(Data::getProcessingTick)
         ).apply(ins, Data::new));
 
         private NonNullList<ItemStack> inventory;
-        private Fluid fluid;
-        private Fluid outputFluid;
+        private NonNullList<FluidStack> fluidStacks;
         private int processingTick;
     }
 
@@ -67,6 +101,8 @@ public class FermenterBlockEntity extends BlockEntity {
 
     public FermenterBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(FermentBlockEntities.FERMENTER.get(), pPos, pBlockState);
+
+        setData(FermentDataAttachments.SLOT_SET, slots);
     }
 
     @Override
@@ -140,6 +176,6 @@ public class FermenterBlockEntity extends BlockEntity {
 
     private void resetRecipe() {
         getData().setProcessingTick(0);
-        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+        update();
     }
 }

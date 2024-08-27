@@ -1,4 +1,4 @@
-package io.github.tt432.ferment.data;
+package io.github.tt432.ferment.data.gather;
 
 import io.github.tt432.eyelib.util.ResourceLocations;
 import io.github.tt432.ferment.Ferment;
@@ -77,15 +77,15 @@ public class GatherDataHandler {
                 Set.of(Ferment.MOD_ID)
         ));
 
-        generator.addProvider(event.includeServer(), new FermentLootTableProvider(output, lookupProvider));
-        generator.addProvider(event.includeServer(), new FermenterRecipeProvider(output, lookupProvider));
-        FermentBlockTagProvider blockTagProvider = new FermentBlockTagProvider(output, lookupProvider, helper);
+        generator.addProvider(event.includeServer(), new io.github.tt432.ferment.data.provider.FermentLootTableProvider(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new io.github.tt432.ferment.data.provider.FermenterRecipeProvider(output, lookupProvider));
+        io.github.tt432.ferment.data.provider.FermentBlockTagProvider blockTagProvider = new io.github.tt432.ferment.data.provider.FermentBlockTagProvider(output, lookupProvider, helper);
         generator.addProvider(event.includeServer(), blockTagProvider);
         generator.addProvider(event.includeServer(),
-                new FermentItemTagProvider(output, lookupProvider, blockTagProvider.contentsGetter(), helper));
+                new io.github.tt432.ferment.data.provider.FermentItemTagProvider(output, lookupProvider, blockTagProvider.contentsGetter(), helper));
 
-        generator.addProvider(event.includeClient(), new FermentItemModelProvider(output, helper));
-        generator.addProvider(event.includeClient(), new FermentBlockStateProvider(output, helper));
+        generator.addProvider(event.includeClient(), new io.github.tt432.ferment.data.provider.FermentItemModelProvider(output, helper));
+        generator.addProvider(event.includeClient(), new io.github.tt432.ferment.data.provider.FermentBlockStateProvider(output, helper));
         generator.addProvider(event.includeClient(), new FermentENLanguageProvider(output));
         generator.addProvider(event.includeClient(), new FermentZHLanguageProvider(output));
     }

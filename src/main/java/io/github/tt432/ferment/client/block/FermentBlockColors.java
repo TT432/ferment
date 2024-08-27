@@ -1,4 +1,4 @@
-package io.github.tt432.ferment.client;
+package io.github.tt432.ferment.client.block;
 
 import io.github.tt432.ferment.common.block.FermentBlocks;
 import lombok.AccessLevel;
