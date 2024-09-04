@@ -1,6 +1,5 @@
 package io.github.tt432.ferment.client;
 
-import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
@@ -87,17 +86,10 @@ public class InWorldGuiGraphics extends GuiGraphics {
 
             try {
                 this.pose().scale(16.0F, -16.0F, 16.0F);
-                boolean flag = !bakedmodel.usesBlockLight();
-                if (flag) {
-                    Lighting.setupForFlatItems();
-                }
 
                 Minecraft.getInstance().getItemRenderer().render(pStack, ItemDisplayContext.GUI, false,
-                        this.pose(), this.bufferSource(), 15728880, OverlayTexture.NO_OVERLAY, bakedmodel);
-                this.flush();
-                if (flag) {
-                    Lighting.setupFor3DItems();
-                }
+                        this.pose(), Minecraft.getInstance().renderBuffers().bufferSource(),
+                        15728880, OverlayTexture.NO_OVERLAY, bakedmodel);
             } catch (Throwable throwable) {
                 CrashReport crashreport = CrashReport.forThrowable(throwable, "Rendering item");
                 CrashReportCategory crashreportcategory = crashreport.addCategory("Item being rendered");
