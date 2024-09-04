@@ -55,20 +55,20 @@ public class FermenterBlockEntity extends BlockEntity {
     }
 
     public final SlotSet slots = new SlotSet(List.of(
-            new Slot(-53, -51, 18, 18, player -> {
+            new Slot(-17, -25, 18, 18, 2, player -> {
                 if (Slots.itemInput(player, data.inventory, 0)) update();
             }),
-            new Slot(-53, -30, 18, 18, player -> {
+            new Slot(-1, 1, 18, 18, 2, player -> {
                 if (Slots.itemInput(player, data.inventory, 1)) update();
             }),
-            new Slot(33, 11, 18, 18, player -> {
+            new Slot(-10, -12, 18, 18, 2, player -> {
                 if (Slots.itemOutput(player, data.inventory, 2)) update();
             }),
-            new Slot(-76, -51, 20, 80, player -> {
+            new Slot(-28, -35, 56, 69, 1, player -> {
                 if (Slots.fluidInput(player, data.fluidStacks, 0, FermentBottles.GET_BOTTLE_FLUID, FermentBottles.FILL_BOTTLE))
                     update();
             }),
-            new Slot(54, -51, 20, 80, player -> {
+            new Slot(-28, -35, 56, 69, 1, player -> {
                 if (Slots.fluidOutput(player, data.fluidStacks, 1, FermentBottles.FILL_BOTTLE)) update();
             })
     ));

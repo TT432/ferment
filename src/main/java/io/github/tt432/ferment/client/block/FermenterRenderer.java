@@ -7,6 +7,7 @@ import io.github.tt432.ferment.common.block.entity.FermenterBlockEntity;
 import io.github.tt432.ferment.common.ui.Slot;
 import io.github.tt432.ferment.common.ui.SlotSet;
 import io.github.tt432.ferment.network.SlotClickPacket;
+import it.unimi.dsi.fastutil.ints.IntArraySet;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -41,7 +42,6 @@ import org.joml.Vector3f;
 public class FermenterRenderer implements BlockEntityRenderer<FermenterBlockEntity> {
     private final BlockEntityRendererProvider.Context context;
 
-    public static final ResourceLocation ARROW = ResourceLocation.withDefaultNamespace("ferment/arrow");
     public static final ResourceLocation SLOT = ResourceLocation.withDefaultNamespace("ferment/slot");
     public static final ResourceLocation FERMENTER_BUBBLE = ResourceLocation.withDefaultNamespace("ferment/fermenter_bubble");
 
@@ -72,31 +72,33 @@ public class FermenterRenderer implements BlockEntityRenderer<FermenterBlockEnti
 
         pGuiGraphics.pose().poseStack.addLast(poseStack.last());
 
-        pGuiGraphics.blitSprite(ARROW, -20, -35, 60, 16);
-
-        if (blockEntity.processing) {
-            pGuiGraphics.blitSprite(FERMENTER_BUBBLE, -6, -51, 32, 32);
-        }
-
         BlockPos pos = blockEntity.getBlockPos();
         SlotSet slots = blockEntity.slots;
         FermenterBlockEntity.Data data = blockEntity.getData();
         NonNullList<ItemStack> inventory = data.getInventory();
         NonNullList<FluidStack> fluidStacks = data.getFluidStacks();
 
-        renderItemSlot(pGuiGraphics, slots.get(0).slot(), inventory.getFirst());
-        renderItemSlot(pGuiGraphics, slots.get(1).slot(), inventory.get(1));
-        renderFluidWithSlot(pGuiGraphics, slots.get(3).slot(), fluidStacks.getFirst().getFluid());
+        if (!blockEntity.processing && (!data.getInventory().get(2).isEmpty() || !data.getFluidStacks().get(1).isEmpty())) {
+            renderItemSlot(pGuiGraphics, slots.get(2).slot(), inventory.get(2));
+            renderFluidWithSlot(pGuiGraphics, slots.get(4).slot(), fluidStacks.get(1).getFluid());
 
-        renderItemSlot(pGuiGraphics, slots.get(2).slot(), inventory.get(2));
-        renderFluidWithSlot(pGuiGraphics, slots.get(4).slot(), fluidStacks.get(1).getFluid());
+            testSlots(pGuiGraphics, slots, pos, IntArraySet.of(2, 4));
+        } else {
+            if (blockEntity.processing) {
+                pGuiGraphics.blitSprite(FERMENTER_BUBBLE, -25, 4, 6, 20, 20);
+            }
 
-        testSlots(pGuiGraphics, slots, pos);
+            renderItemSlot(pGuiGraphics, slots.get(0).slot(), inventory.getFirst());
+            renderItemSlot(pGuiGraphics, slots.get(1).slot(), inventory.get(1));
+            renderFluidWithSlot(pGuiGraphics, slots.get(3).slot(), fluidStacks.getFirst().getFluid());
+
+            testSlots(pGuiGraphics, slots, pos, IntArraySet.of(0, 1, 3));
+        }
 
         poseStack.popPose();
     }
 
-    private boolean hover(PoseStack poseStack, int x, int y, int w, int h) {
+    private boolean hover(PoseStack poseStack, RayAabIntersection ray, int x, int y, int w, int h) {
         Matrix4f m4 = poseStack.last().pose();
 
         Vector3f v1 = m4.transformPosition(new Vector3f(x, y, 0));
@@ -104,33 +106,16 @@ public class FermenterRenderer implements BlockEntityRenderer<FermenterBlockEnti
         Vector3f v3 = m4.transformPosition(new Vector3f(x + w, y + h, 0));
         Vector3f v4 = m4.transformPosition(new Vector3f(x + w, y, 0));
 
-        Entity cameraEntity = Minecraft.getInstance().cameraEntity;
+        var maxX = Math.max(Math.max(v1.x, v2.x), Math.max(v3.x, v4.x));
+        var minX = Math.min(Math.min(v1.x, v2.x), Math.min(v3.x, v4.x));
 
-        if (cameraEntity != null) {
-            var view = cameraEntity.getViewVector(Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false));
+        var maxY = Math.max(Math.max(v1.y, v2.y), Math.max(v3.y, v4.y));
+        var minY = Math.min(Math.min(v1.y, v2.y), Math.min(v3.y, v4.y));
 
-            RayAabIntersection ray = new RayAabIntersection(
-                    (float) 0,
-                    (float) 0,
-                    (float) 0,
-                    (float) view.x,
-                    (float) view.y,
-                    (float) view.z
-            );
+        var maxZ = Math.max(Math.max(v1.z, v2.z), Math.max(v3.z, v4.z));
+        var minZ = Math.min(Math.min(v1.z, v2.z), Math.min(v3.z, v4.z));
 
-            var maxX = Math.max(Math.max(v1.x, v2.x), Math.max(v3.x, v4.x));
-            var minX = Math.min(Math.min(v1.x, v2.x), Math.min(v3.x, v4.x));
-
-            var maxY = Math.max(Math.max(v1.y, v2.y), Math.max(v3.y, v4.y));
-            var minY = Math.min(Math.min(v1.y, v2.y), Math.min(v3.y, v4.y));
-
-            var maxZ = Math.max(Math.max(v1.z, v2.z), Math.max(v3.z, v4.z));
-            var minZ = Math.min(Math.min(v1.z, v2.z), Math.min(v3.z, v4.z));
-
-            return ray.test(minX, minY, minZ, maxX, maxY, maxZ);
-        }
-
-        return false;
+        return ray.test(minX, minY, minZ, maxX, maxY, maxZ);
     }
 
     private void renderFluidWithSlot(GuiGraphics guiGraphics, Slot slot, Fluid fluid) {
@@ -149,7 +134,7 @@ public class FermenterRenderer implements BlockEntityRenderer<FermenterBlockEnti
             int color = extensions.getTintColor();
 
             blitTiledSprite(guiGraphics, sprite,
-                    x + 1, y + 1, 1,
+                    x + 1, y + 1, slot.layer(),
                     w - 2, h - 2,
                     0, 0,
                     sprite.contents().width(), sprite.contents().height(),
@@ -203,12 +188,29 @@ public class FermenterRenderer implements BlockEntityRenderer<FermenterBlockEnti
         }
     }
 
-    protected void testSlots(GuiGraphics pGuiGraphics, SlotSet slotSet, BlockPos pos) {
+    protected void testSlots(GuiGraphics pGuiGraphics, SlotSet slotSet, BlockPos pos, IntArraySet indexes) {
         if (Minecraft.getInstance().mouseHandler.isRightPressed()) {
+            Entity cameraEntity = Minecraft.getInstance().cameraEntity;
+
+            if (cameraEntity == null) return;
+
+            var view = cameraEntity.getViewVector(Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false));
+
+            RayAabIntersection ray = new RayAabIntersection(
+                    (float) 0,
+                    (float) 0,
+                    (float) 0,
+                    (float) view.x,
+                    (float) view.y,
+                    (float) view.z
+            );
+
             for (SlotSet.SlotWithIndex value : slotSet.map().values()) {
+                if (!indexes.contains(value.index())) continue;
+
                 Slot slot = value.slot();
 
-                if (hover(pGuiGraphics.pose(), slot.x(), slot.y(), slot.w(), slot.h())) {
+                if (hover(pGuiGraphics.pose(), ray, slot.x(), slot.y(), slot.w(), slot.h())) {
                     PacketDistributor.sendToServer(new SlotClickPacket(pos, value.index()));
                 }
             }
@@ -216,8 +218,15 @@ public class FermenterRenderer implements BlockEntityRenderer<FermenterBlockEnti
     }
 
     protected void renderItemSlot(GuiGraphics pGuiGraphics, Slot slot, ItemStack itemstack) {
+        PoseStack pose = pGuiGraphics.pose();
+        pose.pushPose();
+
+        pose.translate(0, 0, slot.layer());
+
         renderSlot(pGuiGraphics, slot);
         renderSlotContents(pGuiGraphics, slot.x() + 1, slot.y() + 1, itemstack);
+
+        pose.popPose();
     }
 
     private static void renderSlot(GuiGraphics pGuiGraphics, Slot slot) {

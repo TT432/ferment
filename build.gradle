@@ -103,7 +103,7 @@ configurations {
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
-    implementation 'io.github.tt432:eyelib:21.1.0'
+    implementation 'io.github.tt432:eyelib:21.1.1'
 
     var jei_version = "19.7.0.84"
 

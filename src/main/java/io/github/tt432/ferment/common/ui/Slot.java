@@ -10,6 +10,7 @@ public record Slot(
         int y,
         int w,
         int h,
+        int layer,
         ClickAction clickAction
 ) {
     public interface ClickAction {
